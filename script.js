@@ -1,8 +1,19 @@
 var
-  canv = document.getElementById("canvas"),
+  canv = document.getElementById("canvas");
   ctx = canv.getContext("2d");
+  new1 = document.getElementById("new1");
+  f5 = document.getElementById("f5");
+new1.onclick = function(){
+  img.onload = function(){
+    clean();
+  }
+  clean();
+}
+f5.onclick = function(){
+  document.location.reload();
+}
 canv.width = 450;
-canv.height = 800;
+canv.height = 650;
 ctx.fillRect(0, 150, 450, 10);
 ctx.fillRect(0, 300, 450, 10);
 ctx.fillRect(150, 0, 10, 450);
@@ -15,12 +26,8 @@ var a = [[0,0,0],
          [0,0,0],
          [0,0,0]];
 var img = new Image();
-function clean(){
-  ctx.clearRect(0, 0, 450, 560);
-  ctx.fillRect(0, 150, 450, 10);
-  ctx.fillRect(0, 300, 450, 10);
-  ctx.fillRect(150, 0, 10, 450);
-  ctx.fillRect(300, 0, 10, 450);
+function score() {
+  ctx.clearRect(0, 460, 500, 500);
   ctx.font = "24px Helvetica Neue"
   ctx.fillText("Первый игрок: " + wX, 20, 550);
   ctx.fillText("Второй игрок: " + w0, 280, 550);
@@ -32,6 +39,14 @@ function clean(){
   ctx.clearRect(30, 600, 444, 620);
   ctx.font = "24px Helvetica Neue"
   ctx.fillText("Ходит игрок - " + turn, 140, 630)
+  ctx.fillText("Ход", 210, 590)
+}
+function clean(){
+  ctx.clearRect(0, 0, 450, 450);
+  ctx.fillRect(0, 150, 450, 10);
+  ctx.fillRect(0, 300, 450, 10);
+  ctx.fillRect(150, 0, 10, 450);
+  ctx.fillRect(300, 0, 10, 450);
   a = [[0,0,0],
        [0,0,0],
        [0,0,0]];
@@ -39,21 +54,19 @@ function clean(){
 function winner0(){
   z = 1;
   w0 += 1;
-  clean();
+  score();
+  alert("Победил 0");
 }
 function winnerX(){
   z = 0;
   wX += 1;
-  img.onload = function(){
-    clean();
-  }
+  score();
+  alert("Победил X");
 }
 function pat(){
   z = 0;
-  img.onload = function(){
-    clean();
-  }
-  clean();
+  score();
+  alert("Ничья");
 }
 function draw(x, y, z){
   if (z % 2 == 0){

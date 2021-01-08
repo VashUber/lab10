@@ -8,35 +8,52 @@ ctx.fillRect(0, 300, 450, 10);
 ctx.fillRect(150, 0, 10, 450);
 ctx.fillRect(300, 0, 10, 450);
 let z = 0;
+    w0 = 0;
+    wX = 0;
+    turn = "X";
 var a = [[0,0,0],
          [0,0,0],
          [0,0,0]];
 var img = new Image();
 function clean(){
-  ctx.clearRect(0, 0, 450, 450);
+  ctx.clearRect(0, 0, 450, 560);
   ctx.fillRect(0, 150, 450, 10);
   ctx.fillRect(0, 300, 450, 10);
   ctx.fillRect(150, 0, 10, 450);
   ctx.fillRect(300, 0, 10, 450);
+  ctx.font = "24px Helvetica Neue"
+  ctx.fillText("Первый игрок: " + wX, 20, 550);
+  ctx.fillText("Второй игрок: " + w0, 280, 550);
+  ctx.fillText("Количество побед", 140, 500);
+  if (z % 2 == 0)
+    turn = "X";
+  else
+    turn = "0";
+  ctx.clearRect(30, 600, 444, 620);
+  ctx.font = "24px Helvetica Neue"
+  ctx.fillText("Ходит игрок - " + turn, 140, 630)
   a = [[0,0,0],
        [0,0,0],
        [0,0,0]];
 }
 function winner0(){
-  clean();
   z = 1;
+  w0 += 1;
+  clean();
 }
 function winnerX(){
+  z = 0;
+  wX += 1;
   img.onload = function(){
     clean();
   }
-  z = 0;
 }
 function pat(){
+  z = 0;
   img.onload = function(){
     clean();
   }
-  z = 0;
+  clean();
 }
 function draw(x, y, z){
   if (z % 2 == 0){
@@ -71,13 +88,19 @@ function draw(x, y, z){
         winner0();
         break;
       }
-      if (s1 == 9 || s2 == 9 || s3 == 9 || s4 == 9){
-        console.log("x");
-        winnerX();
-        break;
+      else{
+        if (s1 == 9 || s2 == 9 || s3 == 9 || s4 == 9){
+          console.log("x");
+          winnerX();
+          break;
+        }
+        else{
+          if (num == 9){
+            pat();
+            break;
+          }
+        }
       }
-      else if (num == 9)
-        pat();
     }
   }
 }
@@ -141,6 +164,18 @@ canvas.addEventListener('click', function(e) {
   console.log("x: " + x + " y: " + y)
   if (x < 450 && y < 450) {
     z += 1;
+    if (z % 2 == 0)
+      turn = "X";
+    else
+      turn = "0";
+    ctx.clearRect(30, 600, 444, 620);
+    ctx.fillText("Ходит игрок - " + turn, 140, 630)
     check(x, y, z);
   }
 })
+ctx.font = "24px Helvetica Neue"
+ctx.fillText("Первый игрок: " + 0, 20, 550);
+ctx.fillText("Второй игрок: " + 0, 280, 550);
+ctx.fillText("Количество побед", 140, 500);
+ctx.fillText("Ход", 210, 590)
+ctx.fillText("Ходит игрок - " + turn, 140, 630)

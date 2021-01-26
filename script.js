@@ -8,6 +8,7 @@ new1.onclick = function(){
     clean();
   }
   clean();
+  win = 0;
 }
 f5.onclick = function(){
   document.location.reload();
@@ -22,6 +23,7 @@ let z = 0;
     w0 = 0;
     wX = 0;
     turn = "X";
+    win = 0;
 var a = [[0,0,0],
          [0,0,0],
          [0,0,0]];
@@ -98,18 +100,21 @@ function draw(x, y, z){
         s4 += a[i][j];
       if (s1 == 12 || s2 == 12 || s3 == 12 || s4 == 12){
         console.log("0");
-        winner0();
+        win = 1;
+        setTimeout(winner0, 250)
         break;
       }
       else{
         if (s1 == 9 || s2 == 9 || s3 == 9 || s4 == 9){
           console.log("x");
-          winnerX();
+          win = 1;
+          setTimeout(winnerX, 250)
           break;
         }
         else{
           if (num == 9){
-            pat();
+            win = 1;
+            setTimeout(pat, 250)
             break;
           }
         }
@@ -181,9 +186,11 @@ canvas.addEventListener('click', function(e) {
       turn = "X";
     else
       turn = "0";
-    ctx.clearRect(30, 600, 444, 620);
-    ctx.fillText("Ходит игрок - " + turn, 140, 630)
-    check(x, y, z);
+    if (win == 0){
+      ctx.clearRect(30, 600, 444, 620);
+      ctx.fillText("Ходит игрок - " + turn, 140, 630);
+      check(x, y, z);
+    }
   }
 })
 ctx.font = "24px Helvetica Neue"

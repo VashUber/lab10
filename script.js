@@ -181,12 +181,12 @@ canvas.addEventListener('click', function(e) {
   const y = event.clientY - rect.top
   console.log("x: " + x + " y: " + y)
   if (x < 450 && y < 450) {
-    z += 1;
-    if (z % 2 == 0)
-      turn = "X";
-    else
-      turn = "0";
     if (win == 0){
+      z += 1;
+      if (z % 2 == 0)
+        turn = "X";
+      else
+        turn = "0";
       ctx.clearRect(30, 600, 444, 620);
       ctx.fillText("Ходит игрок - " + turn, 140, 630);
       check(x, y, z);
